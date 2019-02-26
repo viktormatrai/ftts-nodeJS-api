@@ -5,7 +5,7 @@ const racer = mongoose.Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     nickName: {type: String},
-    gender: {type: Number, max: 1, required: true},
+    gender: {type: Number, max: 1},
     team: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
     race: {type: mongoose.Schema.Types.ObjectId, ref: 'race'},
     email: {
@@ -16,6 +16,7 @@ const racer = mongoose.Schema({
         },
     password: {type: String, required: true},
     points: {type: Number},
+    volunteer: {type: Number, max: 1, default: 0},
     tag: {type: mongoose.Schema.Types.ObjectId, ref: 'tag'}
 });
 
