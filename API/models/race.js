@@ -6,7 +6,6 @@ const race = mongoose.Schema({
     dateOfRace: {type: Date},
     distance: {type: Number},
     racers: {type: mongoose.Types.ObjectId, ref: 'racer'},
-    volunteers: {types: mongoose.Types.ObjectId, ref: 'volunteer'}
 });
 
 module.exports = mongoose.model('race', race);

@@ -16,7 +16,6 @@ const racer = mongoose.Schema({
         },
     password: {type: String, required: true},
     points: {type: Number},
-    volunteer: {type: Number, max: 1, default: 0},
     tag: {type: mongoose.Schema.Types.ObjectId, ref: 'tag'}
 });
 
