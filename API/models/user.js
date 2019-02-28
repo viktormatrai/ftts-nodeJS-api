@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 
 const racer = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
+    admin: {type: Boolean, default: false},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     nickName: {type: String},
     gender: {type: Number, max: 1},
     team: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-    race: {type: mongoose.Schema.Types.ObjectId, ref: 'race'},
+    races: {type: mongoose.Schema.Types.ObjectId, ref: 'race'},
     email: {
             type: String,
             required: true,
