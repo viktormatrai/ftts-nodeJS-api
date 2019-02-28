@@ -160,4 +160,7 @@ modules.xml
 .idea/misc.xml
 *.ipr
 
+/data
+nodemon.json
+
 # End of https://www.gitignore.io/api/node,webstorm+iml

@@ -58,7 +58,7 @@ exports.createRace = (req, res, next) => {
 };
 
 exports.getRaceById = (res, req, next) => {
-  const id = req.params.raceId;
+  const id = req.params._id;
 
   race.findOne(id, 'raceName dateOfRace distance racers')
       .exec()

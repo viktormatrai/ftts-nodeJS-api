@@ -97,6 +97,59 @@ exports.deleteUser = (req, res, next) => {
       });
 };
 
+exports.getAllRacers = (res, req, next) => {
+    racer.find()
+        .select('firstName lastName nickName team points')
+        .exec()
+        .then(docs => {
+            const response = {
+                count: docs.length,
+                racers: docs.map(docs => {
+                    return {
+                        firstName: docs.firstName,
+                        lastName: docs.firstName,
+                        nickName: docs.nickName,
+                        team: docs.team,
+                        points: docs.points
+                    }
+                })
+
+            };
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
+
+exports.getUserbyId = (res, req, next) => {
+    const id = req.params._id;
+
+    racer.findOne(id)
+        .exec()
+        .then(doc => {
+            if (doc){
+                res.status(200).json({
+                   racer: doc
+                });
+            } else {
+                res.status(404).json({
+                    message: "nothing's here"
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.stat(500).json({
+                error: err
+            });
+        });
+};
+
 exports.logOut = (req, res, next) => {
 
 };
