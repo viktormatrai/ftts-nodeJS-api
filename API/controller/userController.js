@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const user = require('../models/user');
+
 exports.signUp = (req, res, next) => {
     user.find({ email: req.body.email})
         .exec()
@@ -97,8 +98,8 @@ exports.deleteUser = (req, res, next) => {
       });
 };
 
-exports.getAllRacers = (res, req, next) => {
-    racer.find()
+exports.getAllRacers = (req, res, next) => {
+    user.find()
         .select('firstName lastName nickName team points')
         .exec()
         .then(docs => {
@@ -115,6 +116,7 @@ exports.getAllRacers = (res, req, next) => {
                 })
 
             };
+            console.log(response);
             res.status(200).json(response);
         })
         .catch(err => {
@@ -126,10 +128,10 @@ exports.getAllRacers = (res, req, next) => {
 };
 
 
-exports.getUserbyId = (res, req, next) => {
+exports.getUserbyId = (req, res, next) => {
     const id = req.params._id;
 
-    racer.findOne(id)
+    user.findOne(id)
         .exec()
         .then(doc => {
             if (doc){

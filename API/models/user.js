@@ -16,7 +16,7 @@ const racer = mongoose.Schema({
             match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         },
     password: {type: String, required: true},
-    points: {type: Number},
+    points: {type: Number, default: 0},
     tag: {type: mongoose.Schema.Types.ObjectId, ref: 'tag'}
 });
 

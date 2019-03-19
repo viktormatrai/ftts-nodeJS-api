@@ -10,14 +10,16 @@ const mongoAtlasURIStr = 'mongodb://viktormatrai:' + process.env.MONGO_ATLAS_PW 
                         'FTTS-shard-0&authSource=admin&retryWrites=true';
 
 const raceRoutes = require('./API/routes/race');
+const racerRoutes = require('./API/routes/racer');
 
-mongoose.connect(mongoAtlasURIStr, {useNewUrlParser: true, dbName: 'FTTS'});
+mongoose.connect(mongoAtlasURIStr, {useNewUrlParser: true, dbName: 'FTTS_TEST'});
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/', raceRoutes);
+app.use('/racers', racerRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");

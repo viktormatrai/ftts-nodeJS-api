@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
-const race = require('../models/race');
+const Race = require('../models/race');
 
-exports.getAllRaces = (res, req, next) => {
-    race.find()
-        .select('raceName dateOfRace distance _id')
+exports.getAllRaces = (req, res, next) => {
+    Race.find()
+        .select('raceName dateOfRace distance elevation _id')
         .exec()
         .then(docs => {
             const response = {
-                count: docs.length,
-                races: docs.map(docs => {
+                races: docs.map(doc => {
                     return {
                         raceName: doc.raceName,
                         dateOfRace: doc.dateOfRace,
                         distance: doc.distance,
+                        elevation: doc.elevation,
+                        individual: doc.individual,
                         _id: doc._id,
                         request: {
                             type: 'GET',
-                            url: 'http://localhost:9999/race/doc._id'
+                            url: 'http://localhost:9998/'+ doc._id
                         }
                     }
                 })
@@ -32,7 +33,7 @@ exports.getAllRaces = (res, req, next) => {
 };
 
 exports.createRace = (req, res, next) => {
-    const race = new race({
+    const race = new Race({
         _id: new mongoose.Types.ObjectId(),
         raceName: req.body.raceName,
         dateOfRace: req.body.dateOfRace,
@@ -57,17 +58,21 @@ exports.createRace = (req, res, next) => {
         });
 };
 
-exports.getRaceById = (res, req, next) => {
-  const id = req.params._id;
+exports.getRaceById = (req, res, next) => {
+  const id = req.params.raceId;
 
-  race.findOne(id, 'raceName dateOfRace distance racers')
+  Race.findById(id, 'raceName dateOfRace distance elevation individual racers')
       .exec()
       .then(doc => {
           if (doc){
               res.status(200).json({
-                    race: doc
-                  }
-              )
+                    raceName: doc.raceName,
+                    dateOfRace: doc.dateOfRace,
+                    distance: doc.distance,
+                    elevation: doc.elevation,
+                    individual: doc.individual,
+                    racers: doc.racers
+                  });
           } else {
               res.status(404)
                   .json({message: 'Nothing here'})
@@ -87,14 +92,14 @@ exports.updateRace = (req, res, next) => {
   for (const ops of req.body) {
       updateOps[ops.propertyName] = ops.value;
   }
-  race.update({_id: id}, {$set: updateOps})
+  Race.update({_id: id}, {$set: updateOps})
       .exec()
       .then(result => {
           res.status(200).json({
               message: "race updated",
               request: {
                   type: "GET",
-                  url: "http://localhost:9999/race " + id
+                  url: "http://localhost:9999/race " + doc._id
               }
           })
       })
@@ -109,7 +114,7 @@ exports.updateRace = (req, res, next) => {
 exports.deleteRace = (req, res, next) => {
     const id = req.params.raceId;
 
-    race.removeOne({ _id: id})
+    Race.removeOne({ _id: id})
         .exec()
         .then( result => {
             res.status(200).json({
