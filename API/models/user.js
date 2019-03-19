@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const racer = mongoose.Schema({
+const users = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
     admin: {type: Boolean, default: false},
     firstName: {type: String, required: true},
@@ -20,4 +20,4 @@ const racer = mongoose.Schema({
     tag: {type: mongoose.Schema.Types.ObjectId, ref: 'tag'}
 });
 
-module.exports = mongoose.model('racer', racer);
+module.exports = mongoose.model('users', users);

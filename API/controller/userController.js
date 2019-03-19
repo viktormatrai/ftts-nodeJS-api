@@ -100,23 +100,25 @@ exports.deleteUser = (req, res, next) => {
 
 exports.getAllRacers = (req, res, next) => {
     user.find()
-        .select('firstName lastName nickName team points')
+        .select('firstName lastName nickName team points _id')
         .exec()
         .then(docs => {
             const response = {
-                count: docs.length,
-                racers: docs.map(docs => {
+                racers: docs.map(doc => {
                     return {
-                        firstName: docs.firstName,
-                        lastName: docs.firstName,
-                        nickName: docs.nickName,
-                        team: docs.team,
-                        points: docs.points
+                        firstName: doc.firstName,
+                        lastName: doc.firstName,
+                        nickName: doc.nickName,
+                        team: doc.team,
+                        points: doc.points,
+                        id: doc._id,
+                        response: {
+                            type: 'GET',
+                            url: 'http://localhost:9998/racers/'+ doc._id
+                        }
                     }
                 })
-
             };
-            console.log(response);
             res.status(200).json(response);
         })
         .catch(err => {
@@ -128,15 +130,20 @@ exports.getAllRacers = (req, res, next) => {
 };
 
 
-exports.getUserbyId = (req, res, next) => {
+exports.getUserById = (req, res, next) => {
     const id = req.params._id;
 
-    user.findOne(id)
+    user.findOne(id, 'firstName lastName nickName team points races')
         .exec()
         .then(doc => {
             if (doc){
                 res.status(200).json({
-                   racer: doc
+                    firstName: doc.firstName,
+                    lastName: doc.lastName,
+                    nickName: doc.nickName,
+                    team: doc.team,
+                    points: doc.points,
+                    races: doc.races
                 });
             } else {
                 res.status(404).json({
