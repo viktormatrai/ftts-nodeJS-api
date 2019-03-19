@@ -17,7 +17,7 @@ exports.getAllRaces = (req, res, next) => {
                         _id: doc._id,
                         request: {
                             type: 'GET',
-                            url: 'http://localhost:9998/'+ doc._id
+                            url: 'http://localhost:9998/race/'+ doc._id
                         }
                     }
                 })
@@ -99,7 +99,7 @@ exports.updateRace = (req, res, next) => {
               message: "race updated",
               request: {
                   type: "GET",
-                  url: "http://localhost:9999/race " + doc._id
+                  url: "http://localhost:9999/race " + result._id
               }
           })
       })

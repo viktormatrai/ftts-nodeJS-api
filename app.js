@@ -18,8 +18,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use('/', raceRoutes);
-app.use('/racers', racerRoutes);
+app.use("/", raceRoutes);
+app.use("/racers", racerRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");
