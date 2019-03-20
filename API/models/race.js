@@ -7,8 +7,8 @@ const race = mongoose.Schema({
     dateOfRace: {type: Date},
     distance: {type: Number},
     elevation: {type: Number},
-    racers: {type: mongoose.Types.ObjectId, ref: 'racer'},
-    individual: {type: Boolean, required: true, default: false},
+    racers: {type: mongoose.Types.ObjectId, ref: 'user'},
+    individual: {type: Boolean, required: true, default: true},
     ifCalculated:{type: Boolean, required:true}
 });
 

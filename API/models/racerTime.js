@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const racerTime = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
-    racer: {type: mongoose.Types.ObjectId, ref: 'racer'},
+    racer: {type: mongoose.Types.ObjectId, ref: 'user'},
     race: {type: mongoose.Types.ObjectId, ref: 'race'},
     startingTime: {type: Date},
     finishingTime: {type: Date},

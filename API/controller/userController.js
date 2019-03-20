@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const user = require('../models/user');
+const User = require('../models/user');
 
 exports.signUp = (req, res, next) => {
-    user.find({ email: req.body.email})
+    User.find({ email: req.body.email})
         .exec()
         .then(user => {
             if (user.length >= 1) {
@@ -19,10 +19,14 @@ exports.signUp = (req, res, next) => {
                             error: err
                         });
                     } else {
-                        const user = new user({
+                        const user = new User({
                             _id: new mongoose.Types.ObjectId,
                             email: req.body.email,
-                            password: hash
+                            password: hash,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            admin: req.body.admin,
+                            gender: req.body.gender
                         });
                         user.save()
                             .then(result => {
@@ -43,8 +47,8 @@ exports.signUp = (req, res, next) => {
         });
 };
 
-exports.logIn = (res, req, next) => {
-  user.findOne({ email: req.body.email})
+exports.logIn = (req, res, next) => {
+  User.findOne({ email: req.body.email})
       .exec()
       .then(user => {
           if (user.length < 1) {
@@ -61,7 +65,8 @@ exports.logIn = (res, req, next) => {
               if (result) {
                   const token = jwt.sign({
                       email: user.email,
-                      userId: user._id
+                      userId: user._id,
+                      admin: user.admin
                     },
                     process.env.JWT_KEY,
                       {
@@ -83,7 +88,7 @@ exports.logIn = (res, req, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  user.removeOne({_id: req.params.userId})
+  User.removeOne({_id: req.params.userId})
       .exec()
       .then(result=> {
           res.status(200).json({
@@ -99,7 +104,7 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.getAllRacers = (req, res, next) => {
-    user.find()
+    User.find()
         .select('firstName lastName nickName team points _id')
         .exec()
         .then(docs => {
@@ -133,7 +138,7 @@ exports.getAllRacers = (req, res, next) => {
 exports.getUserById = (req, res, next) => {
     const id = req.params._id;
 
-    user.findOne(id, 'firstName lastName nickName team points races')
+    User.findOne(id, 'firstName lastName nickName team points races')
         .exec()
         .then(doc => {
             if (doc){
