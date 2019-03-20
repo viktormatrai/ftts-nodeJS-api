@@ -11,6 +11,7 @@ const mongoAtlasURIStr = 'mongodb://viktormatrai:' + process.env.MONGO_ATLAS_PW 
 
 const raceRoutes = require('./API/routes/race');
 const racerRoutes = require('./API/routes/racer');
+const teamRoutes = require('./API/routes/team');
 
 mongoose.connect(mongoAtlasURIStr, {useNewUrlParser: true, dbName: 'FTTS_TEST'});
 app.use(cors());
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 
 app.use('/', raceRoutes);
 app.use('/racers', racerRoutes);
+app.use('/teams', teamRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");
