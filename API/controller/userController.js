@@ -88,7 +88,7 @@ exports.logIn = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  User.removeOne({_id: req.params.userId})
+  User.remove({_id: req.params.userId})
       .exec()
       .then(result=> {
           res.status(200).json({
