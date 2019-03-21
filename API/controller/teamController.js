@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Team = require('../models/team');
 
-exports.getAllTeams = (req, res, next) => {
+exports.getAllTeams = (req, res) => {
   Team.find()
       .select('_id teamName racers races teamPoints')
       .then(teams => {
@@ -27,7 +27,7 @@ exports.getAllTeams = (req, res, next) => {
       });
 };
 
-exports.createTeam = (req, res, next) => {
+exports.createTeam = (req, res) => {
     Team.find({ teamName: req.body.teamName})
         .exec()
         .then(team => {
@@ -57,20 +57,18 @@ exports.createTeam = (req, res, next) => {
         });
 };
 
-exports.assignToTeam = (req, res, next) => {
-    const id = req.params._id;
-    const updateOps = {};
-    for (const ops of Object.keys(updateOps)) {
-        updateOps[ops.propertyName] = ops.value;
-    }
-    Team.updateOne({_id: id}, {$addToSet: updateOps})
+exports.assignToTeam = (req, res) => {
+
+    const id = req.params.teamId;
+
+    Team.updateOne({_id: id}, {$addToSet: {racers: req.userData.userId}})
         .exec()
         .then(result => {
             res.status(200).json({
                 message: "team updated",
                 request: {
                     type: "GET",
-                    url: "http://localhost:9999/teams " + result._id
+                    url: `http://localhost:9999/teams/${id}`
                 }
             })
         })

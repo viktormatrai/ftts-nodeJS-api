@@ -99,7 +99,7 @@ exports.updateRace = (req, res, next) => {
               message: "race updated",
               request: {
                   type: "GET",
-                  url: "http://localhost:9999/race " + result._id
+                  url: `http://localhost:9999/race/${result._id}`
               }
           })
       })
