@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const teamService = require('../sevice/teamService');
 const Team = require('../models/team');
 
 exports.getAllTeams = (req, res) => {
@@ -57,25 +57,4 @@ exports.createTeam = (req, res) => {
         });
 };
 
-exports.assignToTeam = (req, res) => {
-
-    const id = req.params.teamId;
-
-    Team.updateOne({_id: id}, {$addToSet: {racers: req.userData.userId}})
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: "team updated",
-                request: {
-                    type: "GET",
-                    url: `http://localhost:9999/teams/${id}`
-                }
-            })
-        })
-        .catch(err =>{
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-};
+exports.assignToTeam = (req, res) => teamService.assignToTeam(req, res);
