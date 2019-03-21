@@ -163,7 +163,3 @@ exports.getUserById = (req, res, next) => {
             });
         });
 };
-
-exports.logOut = (req, res, next) => {
-
-};

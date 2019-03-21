@@ -5,7 +5,7 @@ const team = mongoose.Schema({
     teamName: {type: String, required: true},
     racers: {type: mongoose.Types.ObjectId, ref: 'racer'},
     races: {type: mongoose.Types.ObjectId, ref: 'race'},
-    teamPoints: {type: Number}
+    teamPoints: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('team', team);
