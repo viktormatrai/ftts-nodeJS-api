@@ -9,5 +9,6 @@ router.post('/finishing-time/:timeId', auth, admin, RacerTimeController.setFinis
 router.post('/neutral-zones/:timeId', auth, admin, RacerTimeController.setNeutralTimes);
 router.post('/dnf/:timeId', auth, admin, RacerTimeController.setIfDNF);
 router.post('/penalty/:timeId', auth, admin, RacerTimeController.setPenalty);
+router.post('/save-final-time/:timeId', auth, admin, RacerTimeController.saveFinalTime);
 
 module.exports = router;

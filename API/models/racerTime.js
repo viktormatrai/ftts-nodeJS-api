@@ -6,7 +6,7 @@ const racerTime = mongoose.Schema({
     race: {type: mongoose.Types.ObjectId, ref: 'race'},
     startingTime: {type: Date},
     finishingTime: {type: Date},
-    finalTime: {type: Date},
+    finalTime: {type: String},
     neutralZoneOne: {type: Number},
     neutralZoneTwo: {type: Number},
     neutralZoneThree: {type: Number},

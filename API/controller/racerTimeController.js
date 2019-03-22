@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+const moment = require('moment');
 const RacerTime = require('../models/racerTime');
 
 exports.createStartingTime = async (req, res, next) => {
@@ -82,4 +83,36 @@ exports.setPenalty = async (req, res, next) => {
   } catch (err) {
       next(err)
   }
+};
+
+exports.saveFinalTime = async (req, res, next) => {
+  const {timeId} = req.params;
+
+  try {
+     const racerTime = await RacerTime.findOne({_id: timeId}).exec();
+     const finalTime = calculateFinalTime(racerTime);
+      console.log('finalTime', finalTime);
+      RacerTime.updateOne({_id: timeId}, {$set: {finalTime}}).exec();
+      res.status(201).json({
+          message: "final time saved"
+      })
+  } catch (err) {
+      next(err)
+  }
+};
+
+const calculateFinalTime = (racerTime) => {
+    const {startingTime, finishingTime, neutralZoneOne, neutralZoneTwo, neutralZoneThree, penalty, dnf} = racerTime;
+
+    const finalTime = moment(moment(finishingTime).diff(moment(startingTime)))
+        .subtract(neutralZoneOne, 'seconds')
+        .subtract(neutralZoneTwo, 'seconds')
+        .subtract(neutralZoneThree, 'seconds');
+
+    if (penalty){
+        moment(finalTime).add(2, 'minutes');
+    }
+
+    return dnf ? null : moment(finalTime).format("HH:mm:ss");
+
 };

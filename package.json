@@ -16,7 +16,8 @@
     "jsonwebtoken": "latest",
     "mongoose": "^5.4.15",
     "morgan": "^1.9.1",
-    "bcrypt": "latest"
+    "bcrypt": "latest",
+    "moment": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
