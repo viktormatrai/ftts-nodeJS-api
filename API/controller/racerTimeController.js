@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const moment = require('moment');
 const RacerTime = require('../models/racerTime');
@@ -91,7 +90,6 @@ exports.saveFinalTime = async (req, res, next) => {
   try {
      const racerTime = await RacerTime.findOne({_id: timeId}).exec();
      const finalTime = calculateFinalTime(racerTime);
-      console.log('finalTime', finalTime);
       RacerTime.updateOne({_id: timeId}, {$set: {finalTime}}).exec();
       res.status(201).json({
           message: "final time saved"
@@ -104,15 +102,16 @@ exports.saveFinalTime = async (req, res, next) => {
 const calculateFinalTime = (racerTime) => {
     const {startingTime, finishingTime, neutralZoneOne, neutralZoneTwo, neutralZoneThree, penalty, dnf} = racerTime;
 
-    const finalTime = moment(moment(finishingTime).diff(moment(startingTime)))
+    const updatedFinishingTime = moment(finishingTime)
         .subtract(neutralZoneOne, 'seconds')
         .subtract(neutralZoneTwo, 'seconds')
         .subtract(neutralZoneThree, 'seconds');
 
     if (penalty){
-        moment(finalTime).add(2, 'minutes');
+        updatedFinishingTime.add(2, 'minutes');
     }
 
-    return dnf ? null : moment(finalTime).format("HH:mm:ss");
-
+    const finalTime = moment.duration(updatedFinishingTime.diff(moment(startingTime)));
+    console.log(`${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`);
+    return dnf ? null : `${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`;
 };
