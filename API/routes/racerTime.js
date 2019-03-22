@@ -6,5 +6,8 @@ const RacerTimeController = require('../controller/racerTimeController');
 
 router.post('/create-time/:race/:racer', auth, admin, RacerTimeController.createStartingTime);
 router.post('/finishing-time/:timeId', auth, admin, RacerTimeController.setFinishingTime);
+router.post('/neutral-zones/:timeId', auth, admin, RacerTimeController.setNeutralTimes);
+router.post('/dnf/:timeId', auth, admin, RacerTimeController.setIfDNF);
+router.post('/penalty/:timeId', auth, admin, RacerTimeController.setPenalty);
 
 module.exports = router;
