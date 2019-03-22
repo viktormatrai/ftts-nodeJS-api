@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 const raceController = require('../controller/raceController');
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 router.get("/", raceController.getAllRaces);
 
-router.get("/race/:raceId", raceController.getRaceById);
+router.get("/:raceId", raceController.getRaceById);
 
-router.post("/", auth, raceController.createRace);
+router.post("/", auth, admin, raceController.createRace);
 
-router.patch("/race/:raceId", auth, raceController.updateRace);
+router.patch("/:raceId", auth, admin, raceController.updateRace);
 
-router.delete('/race/:raceId', auth, raceController.deleteRace);
+router.delete('/:raceId', auth, admin, raceController.deleteRace);
+router.post('/assign-to-race/:raceId', auth, raceController.assignToRace);
+
 
 module.exports = router;

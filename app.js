@@ -13,6 +13,7 @@ const raceRoutes = require('./API/routes/race');
 const racerRoutes = require('./API/routes/racer');
 const teamRoutes = require('./API/routes/team');
 const racerTimeRoutes = require('./API/routes/racerTime');
+const pointRoutes = require('./API/routes/points');
 
 
 mongoose.connect(mongoAtlasURIStr, {useNewUrlParser: true, dbName: 'FTTS_TEST'});
@@ -21,10 +22,11 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use('/', raceRoutes);
-app.use('/racers', racerRoutes);
-app.use('/teams', teamRoutes);
-app.use('/times', racerTimeRoutes);
+app.use('/api/race', raceRoutes);
+app.use('/api/racers', racerRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/times', racerTimeRoutes);
+app.use('/api/championship', pointRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");

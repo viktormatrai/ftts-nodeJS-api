@@ -129,3 +129,18 @@ exports.deleteRace = (req, res, next) => {
         });
 };
 
+exports.assignToRace = (req, res, next) => {
+    const {raceId} = req.params;
+    const {userId} = req.userData;
+
+    Race.updateOne({_id: raceId}, {$addToSet: {racers: userId}})
+        .exec()
+        .then(result => {
+            res.status(201).json({
+                message: "racer added to race",
+            })
+        })
+        .catch(err => {
+         next(err)
+        });
+};

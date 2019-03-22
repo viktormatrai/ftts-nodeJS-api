@@ -100,7 +100,8 @@ exports.saveFinalTime = async (req, res, next) => {
 };
 
 const calculateFinalTime = (racerTime) => {
-    const {startingTime, finishingTime, neutralZoneOne, neutralZoneTwo, neutralZoneThree, penalty, dnf} = racerTime;
+    if (racerTime.dnf) return null;
+    const {startingTime, finishingTime, neutralZoneOne, neutralZoneTwo, neutralZoneThree, penalty} = racerTime;
 
     const updatedFinishingTime = moment(finishingTime)
         .subtract(neutralZoneOne, 'seconds')
@@ -113,5 +114,5 @@ const calculateFinalTime = (racerTime) => {
 
     const finalTime = moment.duration(updatedFinishingTime.diff(moment(startingTime)));
     console.log(`${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`);
-    return dnf ? null : `${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`;
+    return `${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`;
 };
