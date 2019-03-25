@@ -113,6 +113,5 @@ const calculateFinalTime = (racerTime) => {
     }
 
     const finalTime = moment.duration(updatedFinishingTime.diff(moment(startingTime)));
-    console.log(`${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`);
     return `${finalTime.hours()}:${finalTime.minutes()}:${finalTime.seconds()}`;
 };

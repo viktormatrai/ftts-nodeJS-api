@@ -12,7 +12,7 @@ const racerTime = mongoose.Schema({
     neutralZoneThree: {type: Number},
     penalty: {type: Boolean, default: false},
     dnf: {type: Boolean, default: false},
-    points: {type:Number, default: 0}
+    points: {type:Number, default: 0, max:20}
 });
 
 module.exports = mongoose.model('racerTime', racerTime);
