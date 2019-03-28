@@ -163,3 +163,15 @@ exports.getUserById = (req, res, next) => {
             });
         });
 };
+
+exports.returnUserByToken = (req, res, next) => {
+    try {
+        const user = {
+            email: req.userData.email,
+            isAdmin: req.userData.admin
+        };
+        res.status(200).json(user);
+    } catch (err) {
+        next(err);
+    }
+};

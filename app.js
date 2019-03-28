@@ -10,10 +10,10 @@ const mongoAtlasURIStr = 'mongodb://viktormatrai:' + process.env.MONGO_ATLAS_PW 
                         'FTTS-shard-0&authSource=admin&retryWrites=true';
 
 const raceRoutes = require('./API/routes/race');
-const racerRoutes = require('./API/routes/racer');
+const racerRoutes = require('./API/routes/user');
 const teamRoutes = require('./API/routes/team');
 const racerTimeRoutes = require('./API/routes/racerTime');
-const pointRoutes = require('./API/routes/points');
+//const pointRoutes = require('./API/routes/points');
 
 
 mongoose.connect(mongoAtlasURIStr, {useNewUrlParser: true, dbName: 'FTTS_TEST'});
@@ -23,10 +23,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/api/race', raceRoutes);
-app.use('/api/racers', racerRoutes);
+app.use('/api/users', racerRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/times', racerTimeRoutes);
-app.use('/api/championship', pointRoutes);
+//app.use('/api/championship', pointRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");
