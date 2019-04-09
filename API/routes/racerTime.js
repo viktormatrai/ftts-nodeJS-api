@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const RacerTimeController = require('../controller/racerTimeController');
 
+router.get('/:raceId', RacerTimeController.getTimesByRaceId);
 router.post('/create-time/:race/:racer', auth, admin, RacerTimeController.createStartingTime);
 router.post('/finishing-time/:timeId', auth, admin, RacerTimeController.setFinishingTime);
 router.post('/neutral-zones/:timeId', auth, admin, RacerTimeController.setNeutralTimes);

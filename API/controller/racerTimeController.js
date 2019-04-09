@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const RacerTime = require('../models/racerTime');
 
+exports.getTimesByRaceId = async (req, res, next) => {
+    const {raceId} = req.params;
+  try {
+      const racerTimes = await RacerTime.find({race: raceId}).exec();
+      res.status(200).json({racerTimes});
+  }  catch (err) {
+      next(err);
+  }
+};
+
 exports.createStartingTime = async (req, res, next) => {
     const {race, racer} = req.params;
   try {

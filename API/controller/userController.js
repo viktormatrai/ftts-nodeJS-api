@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 exports.signUp = (req, res, next) => {
-    User.find({ email: req.body.email})
+    const userToRegister = req.body.formValues
+    User.find({ email: userToRegister.email})
         .exec()
         .then(user => {
             if (user.length >= 1) {
@@ -13,7 +14,7 @@ exports.signUp = (req, res, next) => {
                     message: "this email is already in use"
                 });
             } else {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                bcrypt.hash(userToRegister.password, 10, (err, hash) => {
                     if (err){
                         return res.status(500).json({
                             error: err
@@ -21,12 +22,12 @@ exports.signUp = (req, res, next) => {
                     } else {
                         const user = new User({
                             _id: new mongoose.Types.ObjectId,
-                            email: req.body.email,
+                            email: userToRegister.email,
                             password: hash,
-                            firstName: req.body.firstName,
-                            lastName: req.body.lastName,
-                            admin: req.body.admin,
-                            gender: req.body.gender
+                            firstName: userToRegister.firstName,
+                            lastName: userToRegister.lastName,
+                            admin: userToRegister.admin,
+                            gender: userToRegister.gender
                         });
                         user.save()
                             .then(result => {
