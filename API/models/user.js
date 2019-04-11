@@ -20,4 +20,4 @@ const users = mongoose.Schema({
     tag: {type: mongoose.Schema.Types.ObjectId, ref: 'tag'}
 });
 
-module.exports = mongoose.model('users', users);
+module.exports = mongoose.model('user', users);
