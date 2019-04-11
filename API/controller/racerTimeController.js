@@ -9,6 +9,7 @@ exports.getTimesByRaceId = async (req, res, next) => {
       const racerTimes = await RacerTime
           .find({race: raceId})
           .populate('racer')
+          .populate('race')
           .exec();
 
       res.status(200).json({racerTimes});

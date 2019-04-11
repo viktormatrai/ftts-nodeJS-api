@@ -23,7 +23,7 @@ exports.assignToTeam = (req, res) => {
         });
 };
 
-const removeFromOldTeamIfAssigned = (userId) => {
+const removeFromOldTeamIfAssigned = userId => {
     Team.find({racers: userId})
         .exec()
         .then(result => {

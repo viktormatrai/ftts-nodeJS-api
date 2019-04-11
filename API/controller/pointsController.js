@@ -8,9 +8,9 @@ exports.addPointsToRacers = async (req, res, next) => {
 
     try {
         let points = [20, 16, 14, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-        const timesInDescendingOrder = arrangeTimesDescending(raceId).limit(15);
-        const finalTimesEqualToTheFirstFifteen = RacerTime.find({finalTime: {$eq: timesInDescendingOrder}}).exec();
 
+        const firstFifteenTimesInDescendingOrder = arrangeTimesDescending(raceId).limit(15);
+        const finalTimesEqualToTheFirstFifteen = RacerTime.find({finalTime: {$eq: firstFifteenTimesInDescendingOrder}}).exec();
 
 
     } catch (err) {
