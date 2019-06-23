@@ -10,15 +10,16 @@
   "author": "Viktor Mátrai",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "latest",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "duedatecalc": "^1.0.11",
     "express": "^4.16.4",
     "jsonwebtoken": "latest",
+    "lodash": "latest",
+    "moment": "latest",
     "mongoose": "^5.4.15",
     "morgan": "^1.9.1",
-    "bcrypt": "latest",
-    "moment": "latest",
-    "lodash": "latest",
     "swagger-ui-express": "latest"
   },
   "devDependencies": {
