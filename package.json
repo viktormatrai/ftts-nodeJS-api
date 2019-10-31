@@ -18,7 +18,7 @@
     "jsonwebtoken": "latest",
     "lodash": "latest",
     "moment": "latest",
-    "mongoose": "^5.4.15",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "swagger-ui-express": "latest"
   },
